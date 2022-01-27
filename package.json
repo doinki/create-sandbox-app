@@ -1,0 +1,11 @@
+{
+  "author": "doinki",
+  "bugs": "https://github.com/doinki/create-sandbox-app/issues",
+  "dependencies": {},
+  "homepage": "https://github.com/doinki/create-sandbox-app#readme",
+  "license": "MIT",
+  "name": "create-sandbox-app",
+  "repository": "git@github.com:doinki/create-sandbox-app.git",
+  "scripts": {},
+  "version": "1.0.0"
+}
