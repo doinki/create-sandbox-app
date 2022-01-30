@@ -16,12 +16,15 @@ import {
 } from 'node:fs';
 import { EOL } from 'node:os';
 import { basename, dirname, join, resolve } from 'node:path';
-import { URL } from 'node:url';
+import { fileURLToPath, URL } from 'node:url';
 import prompts from 'prompts';
 import checkForUpdate from 'update-check';
 import validate from 'validate-npm-package-name';
 
-const packageJson = JSON.parse(readFileSync('package.json', 'utf8'));
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const packageJson = JSON.parse(
+  readFileSync(resolve(__dirname, '..', 'package.json'), 'utf8')
+);
 const program = new Command(packageJson.name);
 let projectName: string | undefined;
 
