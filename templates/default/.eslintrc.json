@@ -1,0 +1,96 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "airbnb",
+    "airbnb-typescript",
+    "airbnb/hooks",
+    "plugin:@next/next/recommended",
+    "plugin:prettier/recommended",
+    "plugin:react/jsx-runtime"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "project": "tsconfig.json",
+    "sourceType": "module"
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "react",
+    "simple-import-sort",
+    "sort-destructure-keys",
+    "sort-keys-fix"
+  ],
+  "rules": {
+    "@typescript-eslint/ban-types": [
+      "error",
+      {
+        "types": {
+          "{}": {
+            "fixWith": "object"
+          },
+          "Object": {
+            "fixWith": "object"
+          }
+        }
+      }
+    ],
+    "import/prefer-default-export": "warn",
+    "jsx-a11y/alt-text": [
+      "error",
+      {
+        "img": ["Image"]
+      }
+    ],
+    "jsx-a11y/img-redundant-alt": [
+      "error",
+      {
+        "components": ["Image"]
+      }
+    ],
+    "no-restricted-syntax": [
+      "error",
+      {
+        "selector": "TSEnumDeclaration",
+        "message": "Don't declare enums"
+      }
+    ],
+    "react/function-component-definition": [
+      "error",
+      {
+        "namedComponents": "arrow-function",
+        "unnamedComponents": "arrow-function"
+      }
+    ],
+    "react/jsx-props-no-spreading": [
+      "error",
+      {
+        "custom": "ignore"
+      }
+    ],
+    "react/jsx-sort-props": [
+      "error",
+      {
+        "callbacksLast": true,
+        "reservedFirst": true,
+        "shorthandLast": true
+      }
+    ],
+    "react/prop-types": "off",
+    "simple-import-sort/exports": "warn",
+    "simple-import-sort/imports": "warn",
+    "sort-destructure-keys/sort-destructure-keys": "warn",
+    "sort-keys-fix/sort-keys-fix": "warn"
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": { "alwaysTryTypes": true }
+    }
+  }
+}
