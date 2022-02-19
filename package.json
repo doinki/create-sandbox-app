@@ -35,8 +35,9 @@
   "name": "create-sandbox-app",
   "repository": "git@github.com:doinki/create-sandbox-app.git",
   "scripts": {
-    "prebuild": "rimraf dist",
-    "build": "tsc"
+    "build": "tsc",
+    "postbuild": "cp -r templates dist",
+    "prebuild": "rimraf dist"
   },
   "type": "module",
   "version": "1.0.1"
