@@ -17,7 +17,7 @@
       "jsx": true
     },
     "ecmaVersion": "latest",
-    "project": "tsconfig.json",
+    "project": "tsconfig.eslint.json",
     "sourceType": "module"
   },
   "plugins": [

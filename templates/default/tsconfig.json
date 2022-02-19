@@ -29,5 +29,5 @@
     "target": "ES5"
   },
   "exclude": [],
-  "include": ["next-env.d.ts", "next.config.js", "src/**/*"]
+  "include": ["next-env.d.ts", "src/**/*"]
 }
