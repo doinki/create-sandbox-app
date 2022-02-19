@@ -2,6 +2,7 @@
 
 import chalk from 'chalk';
 import { Command } from 'commander';
+import cpy from 'cpy';
 import spawn from 'cross-spawn';
 import { execSync } from 'node:child_process';
 import { lookup } from 'node:dns';
@@ -265,11 +266,13 @@ ${chalk.bold(`Using ${displayedCommand}.`)}`);
     name: appName,
     private: true,
     scripts: {
+      analyze: 'ANALYZE=true yarn build',
       build: 'next build',
       dev: 'next dev',
       lint: 'next lint',
       start: 'next start',
     },
+    sideEffects: false,
   };
 
   writeFileSync(
@@ -278,12 +281,34 @@ ${chalk.bold(`Using ${displayedCommand}.`)}`);
   );
 
   const installFlags = { useYarn, isOnline };
-  const dependencies = ['react', 'react-dom', 'next'];
+  const dependencies = [
+    'react',
+    'react-dom',
+    'next',
+    '@next/bundle-analyzer',
+    'next-seo',
+    'normalize.css',
+  ];
   const devDependencies = [
+    '@next/eslint-plugin-next',
     '@types/node',
     '@types/react',
+    '@typescript-eslint/eslint-plugin',
+    '@typescript-eslint/parser',
     'eslint',
-    'eslint-config-next',
+    'eslint-config-airbnb',
+    'eslint-config-airbnb-typescript',
+    'eslint-config-prettier',
+    'eslint-import-resolver-typescript',
+    'eslint-plugin-import',
+    'eslint-plugin-jsx-a11y',
+    'eslint-plugin-prettier',
+    'eslint-plugin-react',
+    'eslint-plugin-react-hooks',
+    'eslint-plugin-simple-import-sort',
+    'eslint-plugin-sort-destructure-keys',
+    'eslint-plugin-sort-keys-fix',
+    'prettier',
     'typescript',
   ];
 
@@ -311,6 +336,12 @@ Installing devDependencies:
 
   const devInstallFlags = { devDependencies: true, ...installFlags };
   await install(root, devDependencies, devInstallFlags);
+
+  await cpy('**/*', root, {
+    cwd: join(__dirname, 'templates', 'default'),
+    dot: true,
+    parents: true,
+  });
 
   let cdpath: string;
   if (join(originalDirectory, appName) === appPath) {
