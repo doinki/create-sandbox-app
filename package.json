@@ -5,6 +5,7 @@
   "dependencies": {
     "chalk": "^5.0.0",
     "commander": "^9.0.0",
+    "cpy": "^8.1.2",
     "cross-spawn": "^7.0.3",
     "prompts": "^2.4.2",
     "update-check": "^1.5.4",
@@ -13,7 +14,7 @@
   "description": "Create Next.js-powered React apps with one command.",
   "devDependencies": {
     "@types/cross-spawn": "^6.0.2",
-    "@types/node": "^17.0.13",
+    "@types/node": "^17.0.18",
     "@types/prompts": "^2.0.14",
     "@types/validate-npm-package-name": "^3.0.3",
     "rimraf": "^3.0.2",
