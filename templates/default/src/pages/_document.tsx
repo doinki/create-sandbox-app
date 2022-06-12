@@ -1,6 +1,6 @@
-import Document, { Head, Html, Main, NextScript } from 'next/document';
+import NextDocument, { Head, Html, Main, NextScript } from 'next/document';
 
-class MyDocument extends Document {
+class Document extends NextDocument {
   render() {
     return (
       <Html lang="ko">
@@ -10,7 +10,6 @@ class MyDocument extends Document {
         </Head>
         <body>
           <Main />
-          <div id="__portal" />
           <NextScript />
         </body>
       </Html>
@@ -18,4 +17,4 @@ class MyDocument extends Document {
   }
 }
 
-export default MyDocument;
+export default Document;

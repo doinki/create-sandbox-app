@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "allowJs": true,
-    "baseUrl": "./",
+    "baseUrl": ".",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": false,
     "incremental": true,
@@ -12,16 +12,7 @@
     "moduleResolution": "Node",
     "noEmit": true,
     "paths": {
-      "@/api": ["src/api/index.ts"],
-      "@/atoms": ["src/components/atoms/index.ts"],
-      "@/constants": ["src/constants/index.ts"],
-      "@/hooks": ["src/hooks/index.ts"],
-      "@/icons": ["src/components/atoms/icons/index.ts"],
-      "@/molecules": ["src/components/molecules/index.ts"],
-      "@/organisms": ["src/components/organisms/index.ts"],
-      "@/styles": ["src/styles/index.ts"],
-      "@/styles/global.css": ["src/styles/global.css"],
-      "@/templates": ["src/components/templates/index.ts"]
+      "@/styles/global.css": ["src/styles/global.css"]
     },
     "resolveJsonModule": true,
     "skipLibCheck": true,
