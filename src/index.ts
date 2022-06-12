@@ -261,8 +261,6 @@ It is likely you do not have write permissions for this folder.
 ${chalk.bold(`Using ${displayedCommand}.`)}`);
 
   const packageJson = {
-    dependencies: {},
-    devDependencies: {},
     name: appName,
     private: true,
     scripts: {
@@ -271,8 +269,16 @@ ${chalk.bold(`Using ${displayedCommand}.`)}`);
       dev: 'next dev',
       lint: 'next lint',
       start: 'next start',
+      test: 'jest --coverage',
+      'test:watch': 'jest --watch',
     },
     sideEffects: false,
+    resolutions: {
+      '@types/node': '^16.0.0',
+      postcss: '^8.0.0',
+    },
+    dependencies: {},
+    devDependencies: {},
   };
 
   writeFileSync(
@@ -287,12 +293,16 @@ ${chalk.bold(`Using ${displayedCommand}.`)}`);
     'next',
     '@next/bundle-analyzer',
     'next-seo',
-    'normalize.css',
+    'clsx',
   ];
   const devDependencies = [
     '@next/eslint-plugin-next',
-    '@types/node',
+    '@testing-library/jest-dom',
+    '@testing-library/react',
+    '@testing-library/user-event',
+    '@types/node@^16.0.0',
     '@types/react',
+    '@types/react-dom',
     '@typescript-eslint/eslint-plugin',
     '@typescript-eslint/parser',
     'eslint',
@@ -301,6 +311,8 @@ ${chalk.bold(`Using ${displayedCommand}.`)}`);
     'eslint-config-prettier',
     'eslint-import-resolver-typescript',
     'eslint-plugin-import',
+    'eslint-plugin-jest',
+    'eslint-plugin-jest-dom',
     'eslint-plugin-jsx-a11y',
     'eslint-plugin-prettier',
     'eslint-plugin-react',
@@ -308,7 +320,17 @@ ${chalk.bold(`Using ${displayedCommand}.`)}`);
     'eslint-plugin-simple-import-sort',
     'eslint-plugin-sort-destructure-keys',
     'eslint-plugin-sort-keys-fix',
+    'eslint-plugin-tailwindcss',
+    'eslint-plugin-testing-library',
+    'eslint-plugin-trim',
+    'eslint-plugin-typescript-sort-keys',
+    'jest',
+    'jest-environment-jsdom',
+    'postcss',
+    'postcss-flexbugs-fixes',
+    'postcss-preset-env',
     'prettier',
+    'tailwindcss',
     'typescript',
   ];
 
