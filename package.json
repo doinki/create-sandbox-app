@@ -33,6 +33,7 @@
   ],
   "license": "MIT",
   "name": "create-sandbox-app",
+  "packageManager": "yarn@3.2.1",
   "repository": "git@github.com:doinki/create-sandbox-app.git",
   "scripts": {
     "build": "tsc",
