@@ -6,6 +6,7 @@ import { basename, dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { PackageManager } from './helpers/getPkgManager';
+import tryGitInit from './helpers/git';
 import isFolderEmpty from './helpers/isFolderEmpty';
 import getOnline from './helpers/isOnline';
 import install from './helpers/install';
@@ -87,6 +88,7 @@ const createApp = async ({
   const devDependencies = [
     '@jest/types',
     '@next/eslint-plugin-next',
+    '@testing-library/dom',
     '@testing-library/jest-dom',
     '@testing-library/react',
     '@testing-library/user-event',
@@ -147,14 +149,13 @@ const createApp = async ({
     ...installFlags,
   });
 
-  // TODO: rename
-  await cpy('**/*', root, {
-    cwd: join(__dirname, 'templates', 'default'),
+  await cpy(join(__dirname, 'templates', 'default', '**'), root, {
     dot: true,
-    parents: true,
   });
 
-  // TODO: git
+  if (tryGitInit()) {
+    console.log('\nInitialized a git repository.\n');
+  }
 
   let cdpath = join(originalDirectory, appName) === appPath ? appName : appPath;
 
