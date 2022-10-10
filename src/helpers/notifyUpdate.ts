@@ -11,21 +11,21 @@ const notifyUpdate = async (packageJson: object): Promise<void> => {
       const pkgManager = getPkgManager();
 
       console.log(
-        chalk.yellow.bold(
+        `${chalk.yellow.bold(
           'A new version of `create-sandbox-app` is available!'
-        ) +
-          '\n' +
-          'You can update by running: ' +
-          chalk.cyan(
-            pkgManager === 'yarn'
-              ? 'yarn global add create-sandbox-app'
-              : `${pkgManager} install --global create-sandbox-app`
-          ) +
-          '\n'
+        )}
+You can update by running: ${chalk.cyan(
+          pkgManager === 'yarn'
+            ? 'yarn global add create-sandbox-app'
+            : `${pkgManager} install --global create-sandbox-app`
+        )}\n`
       );
     }
+
     process.exit();
-  } catch {}
+  } catch {
+    // ignore error;
+  }
 };
 
 export default notifyUpdate;
