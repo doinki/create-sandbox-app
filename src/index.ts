@@ -15,22 +15,39 @@ import validateProjectName from './helpers/validatePkg';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const packageJson = JSON.parse(
   readFileSync(resolve(__dirname, '..', 'package.json'), 'utf8')
-);
+) as { name: string; version: string };
+
 const program = new Command(packageJson.name);
-let projectPath: string | undefined;
+let projectPath = '';
 
 program
+  .version(packageJson.version)
   .argument('[project-directory]')
+  .usage(`${chalk.green('<project-directory>')} [options]`)
   .action((name) => {
     projectPath = name;
   })
-  .usage(`${chalk.green('<project-directory>')} [options]`)
-  .option('--use-npm', 'Explicitly tell the CLI to bootstrap the app using npm')
+  .option(
+    '--use-npm',
+    `
+
+  Explicitly tell the CLI to bootstrap the app using npm
+`
+  )
   .option(
     '--use-pnpm',
-    'Explicitly tell the CLI to bootstrap the app using pnpm'
+    `
+
+  Explicitly tell the CLI to bootstrap the app using pnpm
+`
   )
-  .version(packageJson.version)
+  .option(
+    '--template [name]',
+    `
+
+    A template to bootstrap the app with.
+`
+  )
   .allowUnknownOption()
   .parse(process.argv);
 
@@ -45,7 +62,7 @@ program
       message: 'What is your project named?',
       name: 'path',
       type: 'text',
-      validate: (name) => {
+      validate: (name: string) => {
         const { problems = [], valid } = validateProjectName(
           basename(resolve(name))
         );
@@ -63,7 +80,6 @@ program
     console.log(
       `\nPlease specify the project directory:
   ${chalk.cyan(program.name())} ${chalk.green('<project-directory>')}
-
 For example:
   ${chalk.cyan(program.name())} ${chalk.green('my-app')}
 
@@ -79,36 +95,41 @@ Run ${chalk.cyan(`${program.name()} --help`)} to see all options.`
   const { problems = [], valid } = validateProjectName(projectName);
 
   if (!valid) {
-    const message = problems.reduce(
-      (prev, curr) => prev + `    ${chalk.red.bold('*')} ${curr}\n`,
-      `Could not create a project called ${chalk.red(
-        `"${projectName}"`
-      )} because of npm naming restrictions:\n`
+    console.error(
+      problems.reduce(
+        (prev, curr) => `${prev}    ${chalk.red.bold('*')} ${curr}\n`,
+        `Could not create a project called ${chalk.red(
+          `"${projectName}"`
+        )} because of npm naming restrictions:\n`
+      )
     );
-    console.error(message);
 
     process.exit(1);
   }
 
-  const { useNpm, usePnpm } = program.opts();
-
-  const packageManager = !!useNpm
+  const packageManager = program.getOptionValue('useNpm')
     ? 'npm'
-    : !!usePnpm
+    : program.getOptionValue('usePnpm')
     ? 'pnpm'
     : getPkgManager();
 
-  await createApp({ appPath: resolvedProjectPath, packageManager });
+  await createApp({
+    appPath: resolvedProjectPath,
+    packageManager,
+    template: program.getOptionValue('template'),
+  });
 })()
   .then(() => notifyUpdate(packageJson))
-  .catch(async (reason) => {
-    let message = '\nAborting installation.';
+  .catch(async (reason: Error | { command: string }) => {
+    let message = '\nAborting installation.\n';
 
-    message += reason.command
-      ? `  ${chalk.cyan(reason.command)} has failed.`
-      : `${chalk.red(
-          'Unexpected error. Please report it as a bug:'
-        )}\n${reason}\n`;
+    if ('command' in reason) {
+      message += `  ${chalk.cyan(reason.command)} has failed.`;
+    } else {
+      message += `${chalk.red(
+        'Unexpected error. Please report it as a bug:'
+      )}\n${reason.message}\n`;
+    }
 
     console.log(message);
 
