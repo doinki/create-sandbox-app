@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import spawn from 'cross-spawn';
 
-import { PackageManager } from './getPkgManager';
+import type { PackageManager } from './getPkgManager';
 
 interface InstallOptions {
   devDependencies?: boolean;
@@ -19,7 +19,6 @@ const install = (
 
   return new Promise((resolve, reject) => {
     let args: string[];
-    let command = packageManager;
     const useYarn = packageManager === 'yarn';
 
     if (dependencies?.length) {
@@ -54,17 +53,22 @@ const install = (
       args.push(...npmFlags);
     }
 
-    const child = spawn(command, args, {
+    const child = spawn(packageManager, args, {
+      env: {
+        ...process.env,
+        ADBLOCK: '1',
+        DISABLE_OPENCOLLECTIVE: '1',
+        NODE_ENV: 'development',
+      },
       stdio: 'inherit',
-      env: { ...process.env, ADBLOCK: '1', DISABLE_OPENCOLLECTIVE: '1' },
     });
+
     child.on('close', (code) => {
       if (code !== 0) {
-        reject({ command: `${command} ${args.join()}` });
-        return;
+        reject({ command: `${packageManager} ${args.join()}` });
+      } else {
+        resolve();
       }
-
-      resolve();
     });
   });
 };
