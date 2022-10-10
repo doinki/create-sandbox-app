@@ -15,6 +15,7 @@ const isFolderEmpty = (root: string, name: string): boolean => {
     '.idea',
     '.npmignore',
     '.travis.yml',
+    '.yarn',
     'LICENSE',
     'Thumbs.db',
     'docs',
@@ -22,6 +23,7 @@ const isFolderEmpty = (root: string, name: string): boolean => {
     'npm-debug.log',
     'yarn-debug.log',
     'yarn-error.log',
+    'yarnrc.yml',
   ];
 
   const conflicts = readdirSync(root)
@@ -38,10 +40,8 @@ const isFolderEmpty = (root: string, name: string): boolean => {
 
   for (const file of conflicts) {
     try {
-      const stats = lstatSync(join(root, file));
-
-      if (stats.isDirectory()) {
-        console.log(`  ${chalk.blue(`${file}/`)}`);
+      if (lstatSync(join(root, file)).isDirectory()) {
+        console.log(`  ${chalk.blue(file)}/`);
       } else {
         console.log(`  ${file}`);
       }
