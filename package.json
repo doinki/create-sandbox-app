@@ -19,9 +19,10 @@
   "packageManager": "yarn@3.2.4",
   "repository": "git@github.com:doinki/create-sandbox-app.git",
   "scripts": {
-    "build": "tsc",
+    "build": "yarn prebuild && tsc && yarn postbuild",
     "postbuild": "cp -r templates dist",
-    "prebuild": "rimraf dist"
+    "prebuild": "rimraf dist",
+    "test": "node --es-module-specifier-resolution=node --experimental-modules dist/index.js"
   },
   "type": "module",
   "version": "1.3.0",
@@ -42,6 +43,9 @@
     "@types/node": "^16.11.64",
     "@types/prompts": "^2.4.1",
     "@types/validate-npm-package-name": "^4.0.0",
+    "eslint": "^8.25.0",
+    "eslint-config-sandbox": "^1.5.1",
+    "prettier": "^2.7.1",
     "rimraf": "^3.0.2",
     "typescript": "^4.8.4"
   }

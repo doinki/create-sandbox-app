@@ -1,0 +1,14 @@
+{
+  "extends": ["sandbox/base", "sandbox/prettier"],
+  "parserOptions": { "project": "tsconfig.json" },
+  "rules": {
+    "@typescript-eslint/naming-convention": "off",
+    "@typescript-eslint/no-shadow": "off",
+    "@typescript-eslint/no-unsafe-assignment": "off",
+    "no-console": "off",
+    "no-nested-ternary": "off",
+    "no-restricted-syntax": "off",
+    "no-underscore-dangle": "off",
+    "prefer-promise-reject-errors": "off"
+  }
+}
