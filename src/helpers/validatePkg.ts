@@ -1,6 +1,6 @@
 import validateProjectName from 'validate-npm-package-name';
 
-const validatePkg = (name: string): { valid: boolean; problems?: string[] } => {
+const validatePkg = (name: string): { problems?: string[]; valid: boolean } => {
   const {
     validForNewPackages,
     errors = [],
@@ -12,8 +12,8 @@ const validatePkg = (name: string): { valid: boolean; problems?: string[] } => {
   }
 
   return {
-    valid: false,
     problems: [...errors, ...warnings],
+    valid: false,
   };
 };
 
