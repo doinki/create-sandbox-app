@@ -5,6 +5,7 @@ import { EOL } from 'node:os';
 import { basename, dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import checkTemplate from './helpers/checkTemplate';
 import type { PackageManager } from './helpers/getPkgManager';
 import tryGitInit from './helpers/git';
 import install from './helpers/install';
@@ -50,6 +51,10 @@ It is likely you do not have write permissions for this folder.`
   process.chdir(root);
 
   console.log(chalk.bold(`Using ${packageManager}.`));
+
+  if (!checkTemplate(template)) {
+    template = 'default';
+  }
 
   const templatePackageJson = JSON.parse(
     readFileSync(join(__dirname, 'templates', template, 'package.json'), 'utf8')
