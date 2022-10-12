@@ -42,7 +42,7 @@ program
 `
   )
   .option(
-    '--template [name]',
+    '--template <name>',
     `
 
     A template to bootstrap the app with.
